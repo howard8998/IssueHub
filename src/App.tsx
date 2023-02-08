@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import './hi';
-import hi from './hi';
+import './component/login/login';
+import login from './component/login/login';
 
 function App() {
   return (
-    hi()
+    login()
     /*<div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
