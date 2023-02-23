@@ -3,7 +3,6 @@ import './App.css'
 import Login from './view/login/login'
 import Home from './view/homepage/homepage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import { URLSearchParams } from 'url'
 
 function App() {
   const [isLogin, setisLogin] = useState(false)
