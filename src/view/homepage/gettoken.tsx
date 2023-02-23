@@ -5,7 +5,7 @@ async function getAccessToken(
   code: string,
 ): Promise<string | undefined> {
   const instance = axios.create({
-    baseURL: 'http://localhost:3000' // 將 baseURL 設為 http
+    baseURL: 'https://github.com' // 將 baseURL 設為 http
   });
   console.log(code);
   try {
