@@ -6,7 +6,7 @@ async function getAccessToken(
 ): Promise<string | undefined> {
   try {
     const response = await axios.post(
-      'http://github.com/login/oauth/access_token',
+      'https://github.com/login/oauth/access_token',
 
       {
         client_id: clientId,
