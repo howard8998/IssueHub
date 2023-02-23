@@ -1,7 +1,9 @@
 import './loginpage.css'
-import Button from '@material-ui/core/Button'
 
-function hello() {
+import Button from '@mui/material/Button';
+
+
+const login = () => {
   return (
     <>
       <div>
@@ -12,8 +14,9 @@ function hello() {
   )
 }
 function Redirect() {
+  
   window.location.replace(
-    'https://github.com/login/oauth/authorize?client_id=b5612b53764b716cbe01',
+    'https://github.com/login/oauth/authorize?client_id=b5612b53764b716cbe01;scope=repo,user',
   )
 }
-export default hello
+export default login
