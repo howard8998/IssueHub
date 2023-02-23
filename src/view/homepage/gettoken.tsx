@@ -7,6 +7,7 @@ async function getAccessToken(
   const instance = axios.create({
     baseURL: 'http://localhost:3000' // 將 baseURL 設為 http
   });
+  console.log(code);
   try {
     const response = await instance.post(
       '/github/oauth/access_token',
