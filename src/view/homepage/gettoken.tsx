@@ -5,7 +5,7 @@ async function getAccessToken(
   code: string,
 ): Promise<string | undefined> {
   const instance = axios.create({
-    baseURL: 'https://github.com' // 將 baseURL 設為 http
+    baseURL: 'https://proxy-z4fq.onrender.com' // 將 baseURL 設為 http
   });
   console.log(code);
   try {
@@ -20,7 +20,6 @@ async function getAccessToken(
         },
       },
     )
-
     return response.data.access_token
   } catch (error) {
     console.error(error)
