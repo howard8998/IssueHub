@@ -4,9 +4,12 @@ async function getAccessToken(
   clientSecret: string,
   code: string,
 ): Promise<string | undefined> {
+  const instance = axios.create({
+    baseURL: 'http://localhost:3000' // 將 baseURL 設為 http
+  });
   try {
-    const response = await axios.post(
-    'https://localhost:3000/github/oauth/access_token',
+    const response = await instance.post(
+      '/github/oauth/access_token',
       {
         code: code,
       },
