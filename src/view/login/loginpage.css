@@ -1,5 +1,8 @@
 .loginpage{
-    height: auto;
-    width: auto;
-    background-color: aquamarine;
+    height: 200px;
+    margin-top: 5%;
+    max-width:50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    box-shadow: 6;
 }
