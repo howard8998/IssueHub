@@ -1,7 +1,7 @@
 import axios from 'axios'
 import getAccessToken from './gettoken'
-const clientId = 'b5612b53764b716cbe01'
-const clientSecret = 'fb5cbeb01c7a4c2e9db826aeba671967e540a1a4'
+const clientId: string = process.env.REACT_APP_CLIENTID as string
+const clientSecret: string = process.env.REACT_APP_CLIENTSECRET as string
 interface User {
   login: string
   name: string
