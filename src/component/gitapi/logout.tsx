@@ -1,6 +1,7 @@
 const logout = async () => {
-  // 從網址中刪除 code
+  
   await sessionStorage.removeItem('accessToken')
+  // 從網址中刪除 code
   window.location.search = ''
   
 }
