@@ -1,5 +1,3 @@
-import './loginpage.css'
-
 import Button from '@mui/material/Button'
 import { Card, CardActions, CardContent, Typography } from '@mui/material'
 
