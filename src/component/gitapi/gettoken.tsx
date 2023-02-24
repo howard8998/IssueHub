@@ -10,12 +10,14 @@ async function getAccessToken(
   code: string,
 ): Promise<string | undefined> {
   const instance = axios.create({
-    baseURL: 'https://proxy-z4fq.onrender.com',
+    baseURL: process.env.REACT_APP_API_PROXY,
   })
   try {
     const response = await instance.post(
-      '/github/oauth/access_token',
+      '/login/oauth/access_token',
       {
+        client_id: clientId,
+        client_secret: clientSecret,
         code: code,
       },
       {
@@ -35,6 +37,7 @@ async function getAccessToken(
 const gettoken = async () => {
   try {
     const code = await getcode()[1]
+    console.log(code)
     if (
       sessionStorage.getItem('accessToken') === undefined ||
       sessionStorage.getItem('accessToken') === null
