@@ -1,4 +1,3 @@
-
 import axios from 'axios'
 const clientId: string = process.env.REACT_APP_CLIENTID as string
 const clientSecret: string = process.env.REACT_APP_CLIENTSECRET as string
@@ -35,10 +34,15 @@ async function getAccessToken(
 }
 const gettoken = async () => {
   try {
-    const code =  await getcode()[1]
-    if (sessionStorage.getItem("accessToken") === undefined||sessionStorage.getItem("accessToken") === null) {
-      await getAccessToken(clientId, clientSecret, code)
-      console.log('gettoken success')
+    const code = await getcode()[1]
+    if (
+      sessionStorage.getItem('accessToken') === undefined ||
+      sessionStorage.getItem('accessToken') === null
+    ) {
+      if (window.location.search.match('code=?')) {
+        await getAccessToken(clientId, clientSecret, code)
+        console.log('gettoken success')
+      }
     }
   } catch {
     console.error('An error occurred:', Error)
