@@ -10,7 +10,7 @@ interface GraphQLResponse {
   }
 }
 async function getUser(accessToken: string): Promise<User | undefined> {
-  const queryuser= `
+  const query= `
     query {
       viewer {
         login
@@ -23,10 +23,10 @@ async function getUser(accessToken: string): Promise<User | undefined> {
   try {
     const response = await axios.post<GraphQLResponse>(
       'https://api.github.com/graphql',
-      { queryuser },
+      { query },
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`
         },
       },
     )
@@ -48,6 +48,7 @@ const getdata = async () => {
         if (user) {
           console.log(`Username: ${user.login}`)
           sessionStorage.setItem('username',user.login)
+          
         } else {
           console.log('User not found')
         }

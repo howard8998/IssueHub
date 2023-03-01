@@ -1,14 +1,13 @@
 import axios from 'axios'
 
 interface User {
-  login: string
   issues: {
     nodes: Issue[]
   }
 }
 interface GraphQLResponse {
   data: {
-    viewer: User
+    user: User
   }
 }
 interface Issue {
@@ -25,7 +24,7 @@ interface Issue {
 async function getissue(
   accessToken: string,
   username: string,
-): Promise<Issue | undefined> {
+): Promise<Issue[] | undefined> {
   const query = `
     query ($username: String!) {
       user(login: $username) {
@@ -52,7 +51,7 @@ async function getissue(
       {
         query,
         variables: {
-          username,
+          username
         },
       },
       {
@@ -61,8 +60,8 @@ async function getissue(
         },
       },
     )
+    return response.data.data.user.issues?.nodes 
 
-    return response.data.data.viewer.issues.nodes[0]
   } catch (error) {
     console.error(error)
     return undefined
@@ -74,9 +73,9 @@ const getIssue = async () => {
     const accessToken = sessionStorage.getItem('accessToken')
     const username = sessionStorage.getItem('username')
     if (accessToken&&username) {
-          getissue(accessToken,username).then((issue) => {
-            if (issue) {
-              console.log(issue.title)
+          getissue(accessToken,username).then((nodes) => {
+            if (nodes) {
+              console.log(nodes[0].title)
             } else {
               console.log('User not found')
             }

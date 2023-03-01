@@ -5,11 +5,11 @@ import { Card } from '@mui/material'
 import getIssue from '../../component/gitapi/getissue'
 const homepage = () => {
   gettoken()
+  getuser()
   return (
     <Card sx={{ mt: 8, width: 500, mx: 'auto', boxShadow: 4 }}>
       <div>
         <div>login succes!</div>
-        <button onClick={getuser}>getuser</button>
         <button onClick={getIssue}>getIssue</button>
         <button onClick={logout}>logout</button>
       </div>
