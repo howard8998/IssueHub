@@ -1,8 +1,4 @@
 import axios from 'axios'
-import { access } from 'fs'
-import getAccessToken from './gettoken'
-const clientId: string = process.env.REACT_APP_CLIENTID as string
-const clientSecret: string = process.env.REACT_APP_CLIENTSECRET as string
 interface User {
   login: string
   name: string
@@ -13,9 +9,8 @@ interface GraphQLResponse {
     viewer: User
   }
 }
-
 async function getUser(accessToken: string): Promise<User | undefined> {
-  const query = `
+  const queryuser= `
     query {
       viewer {
         login
@@ -28,7 +23,7 @@ async function getUser(accessToken: string): Promise<User | undefined> {
   try {
     const response = await axios.post<GraphQLResponse>(
       'https://api.github.com/graphql',
-      { query },
+      { queryuser },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -36,12 +31,15 @@ async function getUser(accessToken: string): Promise<User | undefined> {
       },
     )
     const { login, name, email } = response.data.data.viewer
-    return { login, name, email }
+    return { login, name, email}
   } catch (error) {
     console.error(error)
     return undefined
   }
 }
+
+
+
 const getdata = async () => {
   if (sessionStorage) {
     const accessToken = sessionStorage.getItem('accessToken')
@@ -49,8 +47,7 @@ const getdata = async () => {
       getUser(accessToken).then((user) => {
         if (user) {
           console.log(`Username: ${user.login}`)
-          console.log(`Name: ${user.name}`)
-          console.log(`Email: ${user.email}`)
+          sessionStorage.setItem('username',user.login)
         } else {
           console.log('User not found')
         }
