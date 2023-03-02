@@ -28,7 +28,7 @@ async function getissue(
   const query = `
     query ($username: String!) {
       user(login: $username) {
-        issues(first: 100, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}) {
+        issues(first: 10, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}) {
           nodes {
             title
             url
