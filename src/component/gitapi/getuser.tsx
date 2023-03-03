@@ -10,7 +10,7 @@ interface GraphQLResponse {
   }
 }
 async function getUser(accessToken: string): Promise<User | undefined> {
-  const query= `
+  const query = `
     query {
       viewer {
         login
@@ -26,34 +26,35 @@ async function getUser(accessToken: string): Promise<User | undefined> {
       { query },
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
         },
       },
     )
     const { login, name, email } = response.data.data.viewer
-    return { login, name, email}
+    return { login, name, email }
   } catch (error) {
     console.error(error)
     return undefined
   }
 }
 
-
-
 const getdata = async () => {
-  if (sessionStorage) {
-    const accessToken = sessionStorage.getItem('accessToken')
-    if (accessToken) {
-      getUser(accessToken).then((user) => {
-        if (user) {
-          console.log(`Username: ${user.login}`)
-          sessionStorage.setItem('username',user.login)
-          
-        } else {
-          console.log('User not found')
-        }
-      })
+  try {
+    if (sessionStorage) {
+      const accessToken = sessionStorage.getItem('accessToken')
+      if (accessToken) {
+        getUser(accessToken).then((user) => {
+          if (user) {
+            console.log(`Username: ${user.login}`)
+            sessionStorage.setItem('username', user.login)
+          } else {
+            console.log('User not found')
+          }
+        })
+      }
     }
+  } catch (error) {
+    console.log(error)
   }
 }
 

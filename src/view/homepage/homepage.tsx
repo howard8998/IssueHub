@@ -1,21 +1,42 @@
 import getuser from '../../component/gitapi/getuser'
 import logout from '../../component/gitapi/logout'
 import gettoken from '../../component/gitapi/gettoken'
-import { Card } from '@mui/material'
-import getIssue from '../../component/gitapi/getissue'
+import { Card, CardActions, CardContent, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
-const homepage = () => {
-  gettoken()
-  getuser()
+import IssueTask from './issuetask'
+import { useState, useEffect } from 'react'
+const HomePage = () => {
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    const initialize = async () => {
+      await Promise.all([gettoken(), getuser()]);
+      setIsInitialized(true);
+    };
+    initialize();
+  }, []);
   return (
-    <Card sx={{ mt: 8, width: 800, mx: 'auto', boxShadow: 4 }}>
-      <div>
-        <div>login succes!</div>
-        <Button onClick={getIssue}>getIssue</Button>
-        <Button onClick={logout}>logout</Button>
-        <Card sx ={{mt:2,width:700,minHeight:100,mx:'auto',mb:2,boxShadow:4}}></Card>
+    <div style={{ width: 800, margin: 'auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button onClick={logout} sx={{ ml: 'auto', mt: 'auto', mb: 0, mr: 0 }}>
+          logout
+        </Button>
       </div>
-    </Card>
+      <Card sx={{ width: 800, mx: 'auto', boxShadow: 4 }}>
+        <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography style={{ margin: 'auto', textAlign: 'center', flex: 1 }}>
+            login succes!
+          </Typography>
+          <div style={{ marginTop: 'auto' }}>
+          {isInitialized && (
+            <div style={{ marginTop: 'auto' }}>
+              <IssueTask />
+            </div>
+          )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
-export default homepage
+export default HomePage

@@ -4,7 +4,7 @@ import Login from './view/login/login'
 import Home from './view/homepage/homepage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
-function App() {
+function App(): JSX.Element {
   const [isLogin, setisLogin] = useState(false)
   const navigate = useNavigate()
   //做某些事情的時候切換到Count頁面

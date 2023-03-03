@@ -64,6 +64,7 @@ async function getissue(
 
   } catch (error) {
     console.error(error)
+    
     return undefined
   }
 }
@@ -73,15 +74,10 @@ const getIssue = async () => {
     const accessToken = sessionStorage.getItem('accessToken')
     const username = sessionStorage.getItem('username')
     if (accessToken&&username) {
-          getissue(accessToken,username).then((nodes) => {
-            if (nodes) {
-              console.log(nodes[0].title)
-            } else {
-              console.log('User not found')
-            }
-          })
+          return await getissue(accessToken,username)
         } else {
           console.log('User not found')
+          return undefined
         }
       }
     }
