@@ -1,6 +1,6 @@
 import { Button, Card, IconButton } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import getIssue from '../../component/gitapi/getissue'
+import getIssue from '../../component/gitapi/fetchissue'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
