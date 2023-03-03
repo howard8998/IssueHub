@@ -16,7 +16,7 @@ interface Issue {
     }
   }
   
-const IssueTask = ({ title }: { title: string }) => {
+const IssueTask = ({ title ,body }: { title: string,body: string }) => {
   const status: string[] = ['Open', 'In Progress', 'Done']
   const statusColor: { [key: string]: string } = {
     Open: 'black',
@@ -45,6 +45,7 @@ const IssueTask = ({ title }: { title: string }) => {
         <MoreVertIcon />
       </IconButton>
       <Typography sx={{width:800,fontSize:20,ml:2.5}}>{title}</Typography>
+      <Typography sx={{width:800,fontSize:18,m:2.5}}>{body}</Typography>
     </Card>
   )
 }
@@ -55,14 +56,14 @@ const IssueTasks = () => {
       const fetchIssues = async () => {
         const result = await getIssue();
         if (result) {
-          setIssues(result.slice(0,3));
+          setIssues(result.slice(0,10));
         }
       };
       fetchIssues();
     }, []);
   
     const issueTasks = issues.map((issue, i) => (
-      <IssueTask key={i} title={issue.title} />
+      <IssueTask key={i} title={issue.title} body={issue.body} />
     ));
     return <div>{issueTasks}</div>;
   };
