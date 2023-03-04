@@ -1,4 +1,5 @@
 import axios from 'axios'
+import gettoken from './gettoken'
 interface User {
   login: string
   name: string
@@ -39,11 +40,12 @@ async function getUser(accessToken: string): Promise<User | undefined> {
 }
 
 const getdata = async () => {
+  await gettoken()
   try {
     if (sessionStorage) {
       const accessToken = sessionStorage.getItem('accessToken')
       if (accessToken) {
-        getUser(accessToken).then((user) => {
+        await getUser(accessToken).then((user) => {
           if (user) {
             console.log(`Username: ${user.login}`)
             sessionStorage.setItem('username', user.login)

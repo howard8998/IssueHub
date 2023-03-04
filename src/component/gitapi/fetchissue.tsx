@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import getuser from '../../component/gitapi/getuser'
 interface User {
   issues: {
     nodes: Issue[]
@@ -70,6 +70,7 @@ async function getissue(
 }
 
 const getIssue = async () => {
+  await getuser()
   if (sessionStorage) {
     const accessToken = sessionStorage.getItem('accessToken')
     const username = sessionStorage.getItem('username')

@@ -6,15 +6,6 @@ import Button from '@mui/material/Button'
 import IssueTask from './issuetask'
 import { useState, useEffect } from 'react'
 const HomePage = () => {
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  useEffect(() => {
-    const initialize = async () => {
-      await Promise.all([gettoken(), getuser()]);
-      setIsInitialized(true);
-    };
-    initialize();
-  }, []);
   return (
     <div style={{ width: 800, margin: 'auto' }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -28,11 +19,9 @@ const HomePage = () => {
             login succes!
           </Typography>
           <div style={{ marginTop: 'auto' }}>
-          {isInitialized && (
             <div style={{ marginTop: 'auto' }}>
               <IssueTask />
             </div>
-          )}
           </div>
         </CardContent>
       </Card>
