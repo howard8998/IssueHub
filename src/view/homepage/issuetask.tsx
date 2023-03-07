@@ -17,12 +17,7 @@ interface Issue {
   }
   
 const IssueTask = ({ title ,body }: { title: string,body: string }) => {
-  const status: string[] = ['Open', 'In Progress', 'Done']
-  const statusColor: { [key: string]: string } = {
-    Open: 'black',
-    'In Progress': 'red',
-    Done: 'green',
-  }
+  
   let i = 2
   return (
     <Card
@@ -38,9 +33,6 @@ const IssueTask = ({ title ,body }: { title: string,body: string }) => {
         flexWrap:'wrap'
       }}
     >
-      <Button sx={{ height: 40, ml: 1, mt: 1, color: statusColor[status[i]] }}>
-        {status[i]}
-      </Button>
       <IconButton sx={{ height: 40, mr: 1, mt: 1, width: 'auto' }}>
         <MoreVertIcon />
       </IconButton>

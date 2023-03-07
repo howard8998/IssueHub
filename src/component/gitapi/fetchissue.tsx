@@ -28,10 +28,11 @@ async function getissue(
   const query = `
     query ($username: String!) {
       user(login: $username) {
-        issues(first: 10, states: [OPEN], orderBy: {field: CREATED_AT, direction: DESC}) {
+        issues(first: 10,  orderBy: {field: CREATED_AT, direction: DESC}) {
           nodes {
             title
             url
+            state
             createdAt
             updatedAt
             body
