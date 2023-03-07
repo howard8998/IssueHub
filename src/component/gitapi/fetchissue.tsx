@@ -13,6 +13,7 @@ interface GraphQLResponse {
 interface Issue {
   title: string
   url: string
+  state:string
   createdAt: string
   updatedAt: string
   body: string
