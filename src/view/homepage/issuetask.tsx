@@ -3,12 +3,13 @@ import {
   Card,
   IconButton,
 } from '@mui/material'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
+
 import fetchIssue from '../../component/gitapi/fetchissue'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
 import StatesDialog from './statesdialog'
+import TaskMenu from './taskmenu'
 
 interface Issue {
   title: string
@@ -57,9 +58,7 @@ const IssueTask = ({
       <Button sx={{ color: statesColor[state] }}>
         {state === 'CLOSED' ? 'DONE' : state}
       </Button>
-      <IconButton sx={{ height: 40, mr: 1, mt: 1, width: 'auto' }}>
-        <MoreVertIcon />
-      </IconButton>
+      <TaskMenu/>
       <Typography sx={{ width: 800, fontSize: 20, ml: 2.5 }}>
         {title}
       </Typography>
