@@ -1,8 +1,4 @@
-import {
-  Button,
-  Card,
-  IconButton,
-} from '@mui/material'
+import { Button, Card, IconButton } from '@mui/material'
 
 import fetchIssue from '../../component/gitapi/fetchissue'
 import { useState } from 'react'
@@ -20,7 +16,7 @@ interface Issue {
   updatedAt: string
   body: string
   repository: {
-    nameWithOwner:string
+    nameWithOwner: string
     url: string
   }
 }
@@ -38,16 +34,15 @@ const IssueTask = ({
   state,
   issuenumber,
   issuename,
-  issueowner
+  issueowner,
 }: {
   title: string
   body: string
   state: string
-  issuenumber:number
-  issuename:string
-  issueowner:string
+  issuenumber: number
+  issuename: string
+  issueowner: string
 }) => {
-  let i = 2
   return (
     <Card
       sx={{
@@ -62,10 +57,17 @@ const IssueTask = ({
         flexWrap: 'wrap',
       }}
     >
-      <Button sx={{ml:1,mt:1, color: statesColor[state] }}>
+      <Button sx={{ ml: 1, mt: 1, color: statesColor[state] }}>
         {state === 'CLOSED' ? 'DONE' : state}
       </Button>
-      <TaskMenu issuename={issuename} issueowner={issueowner} issuenumber={issuenumber} title={title} body ={body}/>
+      <TaskMenu
+        issuename={issuename}
+        issueowner={issueowner}
+        issuenumber={issuenumber}
+        title={title}
+        body={body}
+        
+      />
       <Typography sx={{ width: 800, fontSize: 20, ml: 2.5 }}>
         {title}
       </Typography>
@@ -116,7 +118,7 @@ const IssueTasks = () => {
           ml: 5,
           mt: 1,
           color: statesColor[state],
-          fontSize:20
+          fontSize: 20,
         }}
         onClick={handleClickOpen}
       >
