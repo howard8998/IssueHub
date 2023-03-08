@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   Menu,
@@ -45,6 +44,7 @@ const TaskMenu = ({
   const handleSubmit = () => {
     EditIssue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
     handleEditdialogClose()
+    window.location.reload()
   }
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)

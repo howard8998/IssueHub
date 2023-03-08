@@ -1,4 +1,4 @@
-import { Button, Card, IconButton } from '@mui/material'
+import { Button, Card} from '@mui/material'
 
 import fetchIssue from '../../component/gitapi/fetchissue'
 import { useState } from 'react'
