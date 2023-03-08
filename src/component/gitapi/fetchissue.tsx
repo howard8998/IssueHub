@@ -11,6 +11,7 @@ interface GraphQLResponse {
   }
 }
 interface Issue {
+  number: number
   title: string
   url: string
   state:string
@@ -18,7 +19,7 @@ interface Issue {
   updatedAt: string
   body: string
   repository: {
-    nameWithOwner: string
+    nameWithOwner:string
     url: string
   }
 }
@@ -31,6 +32,7 @@ async function getissue(
       user(login: $username) {
         issues(first: 10,  orderBy: {field: CREATED_AT, direction: DESC}) {
           nodes {
+            number
             title
             url
             state

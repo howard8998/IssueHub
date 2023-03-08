@@ -1,14 +1,52 @@
-import { IconButton, Menu, MenuItem } from '@mui/material'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  Menu,
+  MenuItem,
+  TextField,
+} from '@mui/material'
 import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-const TaskMenu = () => {
+import EditIssue from '../../component/gitapi/editissue'
+const TaskMenu = ({
+  issuename,
+  issueowner,
+  issuenumber,
+  title,
+  body,
+}: {
+  issuename: string
+  issueowner: string
+  issuenumber: number
+  title: string
+  body: string
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const [openeditdialog, setOpenEditDialog] = useState(false)
+
+  const handleEditdialogClose = () => {
+    setOpenEditDialog(false)
+  }
+  const handleSubmit = (
+  ) => {
+    EditIssue(issueowner,issuename,issuenumber,title,body)
+    handleEditdialogClose()
+  }
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+  const handleedit = () => {
+    handleClose()
+    setOpenEditDialog(true)
   }
   return (
     <div>
@@ -37,10 +75,43 @@ const TaskMenu = () => {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleClose}>Edit</MenuItem>
-        <MenuItem onClick={handleClose} sx={{color:'red'}}>Delete</MenuItem>
+        <MenuItem onClick={handleedit}>Edit</MenuItem>
+
+        <MenuItem onClick={handleClose} sx={{ color: 'red' }}>
+          Delete
+        </MenuItem>
       </Menu>
+      <Dialog open={openeditdialog} onClose={handleEditdialogClose}>
+        <DialogTitle>Edit issue</DialogTitle>
+        <DialogContent style={{ minWidth: 400 }}>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="title"
+            label="title"
+            type="title"
+            fullWidth
+            variant="standard"
+            defaultValue={title}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="body"
+            label="body"
+            type="body"
+            fullWidth
+            variant="standard"
+            defaultValue={body}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditdialogClose}>Cancel</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }
+
 export default TaskMenu

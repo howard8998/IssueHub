@@ -12,6 +12,7 @@ import StatesDialog from './statesdialog'
 import TaskMenu from './taskmenu'
 
 interface Issue {
+  number: number
   title: string
   url: string
   state: string
@@ -19,7 +20,7 @@ interface Issue {
   updatedAt: string
   body: string
   repository: {
-    nameWithOwner: string
+    nameWithOwner:string
     url: string
   }
 }
@@ -35,10 +36,16 @@ const IssueTask = ({
   title,
   body,
   state,
+  issuenumber,
+  issuename,
+  issueowner
 }: {
   title: string
   body: string
   state: string
+  issuenumber:number
+  issuename:string
+  issueowner:string
 }) => {
   let i = 2
   return (
@@ -55,10 +62,10 @@ const IssueTask = ({
         flexWrap: 'wrap',
       }}
     >
-      <Button sx={{ color: statesColor[state] }}>
+      <Button sx={{ml:1,mt:1, color: statesColor[state] }}>
         {state === 'CLOSED' ? 'DONE' : state}
       </Button>
-      <TaskMenu/>
+      <TaskMenu issuename={issuename} issueowner={issueowner} issuenumber={issuenumber} title={title} body ={body}/>
       <Typography sx={{ width: 800, fontSize: 20, ml: 2.5 }}>
         {title}
       </Typography>
@@ -96,6 +103,9 @@ const IssueTasks = () => {
       title={issue.title}
       body={issue.body}
       state={issue.state}
+      issuenumber={issue.number}
+      issuename={issue.repository.nameWithOwner.split('/')[1]}
+      issueowner={issue.repository.nameWithOwner.split('/')[0]}
     />
   ))
   return (
@@ -103,9 +113,10 @@ const IssueTasks = () => {
       <Button
         sx={{
           height: 40,
-          ml: 1,
+          ml: 5,
           mt: 1,
           color: statesColor[state],
+          fontSize:20
         }}
         onClick={handleClickOpen}
       >
