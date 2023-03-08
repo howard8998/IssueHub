@@ -1,17 +1,18 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
-const token = sessionStorage.getItem('accessToken')
 
-const EditIssue = (
+
+const EditIssue = async (
   owner: string,
   repo: string,
   issueNumber: number,
   newTitle: string,
   newBody: string,
 ) => {
+  const accesstoken = sessionStorage.getItem('accessToken')
   const headers: AxiosRequestConfig['headers'] = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${accesstoken}`,
   }
 
   // Set the request data
@@ -22,7 +23,7 @@ const EditIssue = (
   const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`
   // Send the PUT request to update the issue
   axios
-    .put(url, data, { headers })
+    .patch(url, data, { headers })
     .then((response) => {
       console.log('Issue updated successfully!')
     })

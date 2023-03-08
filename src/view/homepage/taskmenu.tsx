@@ -29,13 +29,21 @@ const TaskMenu = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [openeditdialog, setOpenEditDialog] = useState(false)
+  const [updatedTitle, setUpdatedTitle] = useState(title)
+  const [updatedBody, setUpdatedBody] = useState(body)
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatedTitle(event.target.value)
+  }
+
+  const handleBodyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatedBody(event.target.value)
+  }
 
   const handleEditdialogClose = () => {
     setOpenEditDialog(false)
   }
-  const handleSubmit = (
-  ) => {
-    EditIssue(issueowner,issuename,issuenumber,title,body)
+  const handleSubmit = () => {
+    EditIssue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
     handleEditdialogClose()
   }
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -93,6 +101,8 @@ const TaskMenu = ({
             fullWidth
             variant="standard"
             defaultValue={title}
+            value={updatedTitle}
+            onChange={handleTitleChange}
           />
           <TextField
             autoFocus
@@ -103,6 +113,8 @@ const TaskMenu = ({
             fullWidth
             variant="standard"
             defaultValue={body}
+            value={updatedBody}
+            onChange={handleBodyChange}
           />
         </DialogContent>
         <DialogActions>
