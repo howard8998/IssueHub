@@ -1,5 +1,7 @@
 import {
+  Alert,
   Button,
+  Collapse,
   Dialog,
   DialogActions,
   DialogContent,
@@ -8,10 +10,12 @@ import {
   Menu,
   MenuItem,
   TextField,
+  Typography,
 } from '@mui/material'
 import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIssue from '../../component/gitapi/editissue'
+import { taskSchema } from '../../component/formschema/taskSchema'
 const TaskMenu = ({
   issuename,
   issueowner,
@@ -30,6 +34,9 @@ const TaskMenu = ({
   const [openeditdialog, setOpenEditDialog] = useState(false)
   const [updatedTitle, setUpdatedTitle] = useState(title)
   const [updatedBody, setUpdatedBody] = useState(body)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [erropen, seterrOpen] = useState(false);
+
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedTitle(event.target.value)
   }
@@ -42,9 +49,16 @@ const TaskMenu = ({
     setOpenEditDialog(false)
   }
   const handleSubmit = () => {
-    EditIssue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
-    handleEditdialogClose()
-    window.location.reload()
+    try {
+      taskSchema.validateSync({ title: updatedTitle, body: updatedBody })
+      EditIssue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
+      handleEditdialogClose()
+      seterrOpen(false)
+      window.location.reload()
+    } catch (err:any) {
+      setSubmitError(err.message)
+      seterrOpen(true)
+    }
   }
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -116,6 +130,8 @@ const TaskMenu = ({
             value={updatedBody}
             onChange={handleBodyChange}
           />
+          <Collapse in={erropen}><Alert severity="error">{submitError}</Alert></Collapse>
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleEditdialogClose}>Cancel</Button>
