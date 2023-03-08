@@ -1,22 +1,15 @@
 import {
   Button,
   Card,
-  Dialog,
-  Icon,
   IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import fetchIssue from '../../component/gitapi/fetchissue'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
-import { SimpleDialogProps } from './homepage'
-import CircleIcon from '@mui/icons-material/Circle'
+import StatesDialog from './statesdialog'
+
 interface Issue {
   title: string
   url: string
@@ -36,39 +29,7 @@ const statesColor: { [key: string]: string } = {
   CLOSED: 'black',
   ALL: 'gray',
 }
-function StatesDialog(props: SimpleDialogProps) {
-  const { onClose, selectedValue, open } = props
 
-  const handleClose = () => {
-    onClose(selectedValue)
-  }
-
-  const handleListItemClick = (value: string) => {
-    onClose(value)
-  }
-
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <List sx={{ pt: 0 }}>
-        {states.map((states) => (
-          <ListItem disableGutters>
-            <ListItemButton
-              onClick={() => handleListItemClick(states)}
-              key={states}
-            >
-              <ListItemAvatar>
-                <Icon sx={{ color: statesColor[states] }}>
-                  <CircleIcon />
-                </Icon>
-              </ListItemAvatar>
-              <ListItemText primary={states === 'CLOSED' ? 'DONE' : states} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Dialog>
-  )
-}
 const IssueTask = ({
   title,
   body,
