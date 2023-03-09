@@ -10,12 +10,12 @@ import {
   Menu,
   MenuItem,
   TextField,
-  Typography,
 } from '@mui/material'
 import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIssue from '../../component/gitapi/editissue'
 import { taskSchema } from '../../component/formschema/taskSchema'
+import closeissue from '../../component/gitapi/closeissue'
 const TaskMenu = ({
   issuename,
   issueowner,
@@ -35,7 +35,7 @@ const TaskMenu = ({
   const [updatedTitle, setUpdatedTitle] = useState(title)
   const [updatedBody, setUpdatedBody] = useState(body)
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const [erropen, seterrOpen] = useState(false);
+  const [erropen, seterrOpen] = useState(false)
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedTitle(event.target.value)
@@ -48,10 +48,10 @@ const TaskMenu = ({
   const handleEditdialogClose = () => {
     setOpenEditDialog(false)
   }
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
       taskSchema.validateSync({ title: updatedTitle, body: updatedBody })
-      EditIssue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
+      await EditIssue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
       handleEditdialogClose()
       seterrOpen(false)
       window.location.reload()
@@ -59,6 +59,11 @@ const TaskMenu = ({
       setSubmitError(err.message)
       seterrOpen(true)
     }
+  }
+  const handleCloseissue = async () => {
+    await closeissue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
+    handleEditdialogClose()
+    window.location.reload()
   }
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -99,7 +104,7 @@ const TaskMenu = ({
       >
         <MenuItem onClick={handleedit}>Edit</MenuItem>
 
-        <MenuItem onClick={handleClose} sx={{ color: 'red' }}>
+        <MenuItem onClick={handleCloseissue} sx={{ color: 'red' }}>
           Delete
         </MenuItem>
       </Menu>
@@ -130,8 +135,9 @@ const TaskMenu = ({
             value={updatedBody}
             onChange={handleBodyChange}
           />
-          <Collapse in={erropen}><Alert severity="error">{submitError}</Alert></Collapse>
-          
+          <Collapse in={erropen}>
+            <Alert severity="error">{submitError}</Alert>
+          </Collapse>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleEditdialogClose}>Cancel</Button>
