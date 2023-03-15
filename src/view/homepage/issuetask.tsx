@@ -1,5 +1,4 @@
 import { Button, Card, IconButton } from '@mui/material'
-
 import fetchIssue from '../../component/gitapi/fetchissue'
 import { SetStateAction, useState } from 'react'
 import { useEffect } from 'react'
@@ -144,7 +143,7 @@ const IssueTasks = () => {
       if (hasNextPage) {
         const result = await fetchIssue(newEndCursor)
         if (result) {
-          setIssues([...issues, ...result.issues.nodes.slice(0, 10)])
+          setIssues(i => [...i, ...result.issues.nodes.slice(0, 10)])
           setnextEndCursor(result.issues.pageInfo.endCursor)
           sethasNextPage(result.issues.pageInfo.hasNextPage)
         }
