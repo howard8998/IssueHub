@@ -125,6 +125,7 @@ const IssueTask = ({
         updated at:{updatedAt}
       </Typography>
     </Card>
+    
   )
 }
 
@@ -202,25 +203,16 @@ const IssueTasks = () => {
     }, [isBottom])
     return null
   }
-  const filteredIssuesBody =
-    serchBody === ''
-      ? issues
-      : issues.filter((issue) => issue.body.includes(serchBody))
-  const filteredIssuesTitle =
-    serchTitle === ''
-      ? filteredIssuesBody
-      : filteredIssuesBody.filter((issue) => issue.title.includes(serchTitle))
-  const filteredIssuesState =
-    state === 'ALL'
-      ? filteredIssuesTitle
-      : filteredIssuesTitle.filter((issue) => issue.labels.nodes[0]?.name=== state)
-  const sortedIssues = filteredIssuesState.sort((a, b) => {
+  const filteredAndSortedIssues = [...issues]
+  .filter((issue) => issue.body.includes(serchBody))
+  .filter((issue) => issue.title.includes(serchTitle))
+  .filter((issue) => state === 'ALL' || issue.labels.nodes[0]?.name === state)
+  .sort((a, b) => {
     const timeA = new Date(a.createdAt).getTime()
     const timeB = new Date(b.createdAt).getTime()
     return order === 'asc' ? timeB - timeA : timeA - timeB
   })
-
-  const issueTasks = sortedIssues.map((issue, i) => (
+  const issueTasks = filteredAndSortedIssues.map((issue, i) => (
     <IssueTask
       key={i}
       title={issue.title}
@@ -252,7 +244,7 @@ const IssueTasks = () => {
           }}
           onClick={handleClickOpen}
         >
-          {state === 'CLOSED' ? 'DONE' : state}
+          {state}
         </Button>
         <StatesFilterDialog
           selectedValue={state}
@@ -284,6 +276,7 @@ const IssueTasks = () => {
       </div>
 
       {issueTasks}
+      
       <BottomDetector />
     </div>
   )

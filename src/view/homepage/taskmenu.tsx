@@ -11,7 +11,7 @@ import {
   MenuItem,
   TextField,
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIssue from '../../component/gitapi/editissue'
 import { taskSchema } from '../../component/formschema/taskSchema'
@@ -36,7 +36,10 @@ const TaskMenu = ({
   const [updatedBody, setUpdatedBody] = useState(body)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [erropen, seterrOpen] = useState(false)
-
+  useEffect(() => {
+    setUpdatedBody(body)
+    setUpdatedTitle(title)
+  })
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedTitle(event.target.value)
   }
@@ -51,17 +54,29 @@ const TaskMenu = ({
   const handleSubmit = async () => {
     try {
       taskSchema.validateSync({ title: updatedTitle, body: updatedBody })
-      await EditIssue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
+      await EditIssue(
+        issueowner,
+        issuename,
+        issuenumber,
+        updatedTitle,
+        updatedBody,
+      )
       handleEditdialogClose()
       seterrOpen(false)
       window.location.reload()
-    } catch (err:any) {
+    } catch (err) {
       setSubmitError(err.message)
       seterrOpen(true)
     }
   }
   const handleCloseissue = async () => {
-    await closeissue(issueowner, issuename, issuenumber, updatedTitle, updatedBody)
+    await closeissue(
+      issueowner,
+      issuename,
+      issuenumber,
+      updatedTitle,
+      updatedBody,
+    )
     handleEditdialogClose()
     window.location.reload()
   }

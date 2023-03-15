@@ -35,7 +35,7 @@ const StatesDialog = (props: SimpleDialogProps) => {
     issueowner,
   } = props
   const [selectedState, setSelectedState] = useState(selectedValue)
-  const handleListItemClick = (value: string) => {
+  const handleListItemClick = async (value: string) => {
     setSelectedState(value)
     onClose(value)
     changeLabel(issueowner, issuename, issuenumber, value)
