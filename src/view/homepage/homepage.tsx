@@ -23,11 +23,8 @@ const HomePage = () => {
           logout
         </Button>
       </div>
-      <Card sx={{ width: 800, mx: 'auto', boxShadow: 4 }}>
+      <Card sx={{ width: 800, mx: 'auto', boxShadow: 4 ,mb:2}}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography style={{ margin: 'auto', textAlign: 'center', flex: 1 }}>
-            login succes!
-          </Typography>
           <div style={{ marginTop: 'auto' }}>
             
             <div style={{ marginTop: 'auto' }}>

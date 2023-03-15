@@ -47,7 +47,6 @@ const getdata = async () => {
       if (accessToken) {
         await getUser(accessToken).then((user) => {
           if (user) {
-            console.log(`Username: ${user.login}`)
             sessionStorage.setItem('username', user.login)
           } else {
             console.log('User not found')

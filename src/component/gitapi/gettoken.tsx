@@ -37,7 +37,6 @@ async function getAccessToken(
 const gettoken = async () => {
   try {
     const code = await getcode()[1]
-    console.log(code)
     if (
       sessionStorage.getItem('accessToken') === undefined ||
       sessionStorage.getItem('accessToken') === null

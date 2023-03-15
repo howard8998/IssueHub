@@ -1,4 +1,4 @@
-import { Button, Card} from '@mui/material'
+import { Button, Card } from '@mui/material'
 
 import fetchIssue from '../../component/gitapi/fetchissue'
 import { useState } from 'react'
@@ -66,7 +66,6 @@ const IssueTask = ({
         issuenumber={issuenumber}
         title={title}
         body={body}
-        
       />
       <Typography sx={{ width: 800, fontSize: 20, ml: 2.5 }}>
         {title}
@@ -75,10 +74,14 @@ const IssueTask = ({
     </Card>
   )
 }
+
 const IssueTasks = () => {
   const [issues, setIssues] = useState<Issue[]>([])
   const [open, setOpen] = useState(false)
   const [state, setstate] = useState(states[0])
+  const [newEndCursor, setnewEndCursor] = useState('')
+  const [nextEndCursor, setnextEndCursor] = useState('')
+  const [hasNextPage, sethasNextPage] = useState(true)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -90,13 +93,42 @@ const IssueTasks = () => {
   }
   useEffect(() => {
     const fetchIssues = async () => {
-      const result = await fetchIssue()
-      if (result) {
-        setIssues(result.slice(0, 10))
+      if (hasNextPage) {
+        const result = await fetchIssue(newEndCursor)
+        if (result) {
+          setIssues([...issues, ...result.issues.nodes.slice(0, 10)])
+          setnextEndCursor(result.issues.pageInfo.endCursor)
+          sethasNextPage(result.issues.pageInfo.hasNextPage)
+        }
       }
     }
     fetchIssues()
-  }, [])
+  }, [newEndCursor])
+  const BottomDetector = () => {
+    const [isBottom, setIsBottom] = useState(false)
+
+    useEffect(() => {
+      function handleScroll() {
+        if (
+          window.innerHeight + window.pageYOffset >=
+          document.body.offsetHeight
+        ) {
+          setIsBottom(true)
+        } else {
+          setIsBottom(false)
+        }
+        return () => window.removeEventListener('scroll', handleScroll)
+      }
+
+      window.addEventListener('scroll', handleScroll)
+    }, [])
+    useEffect(() => {
+      if (isBottom) {
+        setnewEndCursor(nextEndCursor)
+      }
+    }, [isBottom])
+    return null
+  }
   const filteredIssues =
     state === 'ALL' ? issues : issues.filter((issue) => issue.state === state)
   const issueTasks = filteredIssues.map((issue, i) => (
@@ -126,6 +158,7 @@ const IssueTasks = () => {
       </Button>
       <StatesDialog selectedValue={state} open={open} onClose={handleClose} />
       {issueTasks}
+      <BottomDetector />
     </div>
   )
 }
