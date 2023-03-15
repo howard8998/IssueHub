@@ -1,13 +1,15 @@
 import { Button, Card, IconButton } from '@mui/material'
 
 import fetchIssue from '../../component/gitapi/fetchissue'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
 import StatesDialog from './statesdialog'
 import TaskMenu from './taskmenu'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp'
+import TextField from '@material-ui/core/TextField/TextField'
+import { Box } from '@mui/system'
 interface Issue {
   number: number
   title: string
@@ -108,21 +110,32 @@ const IssueTasks = () => {
   const [newEndCursor, setnewEndCursor] = useState('')
   const [nextEndCursor, setnextEndCursor] = useState('')
   const [hasNextPage, sethasNextPage] = useState(true)
-  const [order,setorder] = useState('asc')
+  const [order, setorder] = useState('asc')
+  const [serchBody, setSerchBody] = useState('')
+  const [serchTitle, setSerchTitle] = useState('')
 
   const handleClickOpen = () => {
     setOpen(true)
   }
-
+  const handleSerchBodyChange = (event: {
+    target: { value: SetStateAction<string> }
+  }) => {
+    setSerchBody(event.target.value)
+  }
+  const handleSerchTitleChange = (event: {
+    target: { value: SetStateAction<string> }
+  }) => {
+    setSerchTitle(event.target.value)
+  }
   const handleClose = (value: string) => {
     setOpen(false)
     setstate(value)
   }
-  const heandleOrderBottom =()=>{
-    if (order ==='asc') {
+  const heandleOrderBottom = () => {
+    if (order === 'asc') {
       setorder('desc')
     }
-    if (order ==='desc') {
+    if (order === 'desc') {
       setorder('asc')
     }
   }
@@ -164,12 +177,22 @@ const IssueTasks = () => {
     }, [isBottom])
     return null
   }
-  const filteredIssues =
-    state === 'ALL' ? issues : issues.filter((issue) => issue.state === state)
-  const sortedIssues = filteredIssues.sort((a, b) => {
+  const filteredIssuesBody =
+    serchBody === ''
+      ? issues
+      : issues.filter((issue) => issue.body.includes(serchBody))
+  const filteredIssuesTitle =
+    serchTitle === ''
+      ? filteredIssuesBody
+      : filteredIssuesBody.filter((issue) => issue.title.includes(serchTitle))
+  const filteredIssuesState =
+    state === 'ALL'
+      ? filteredIssuesTitle
+      : filteredIssuesTitle.filter((issue) => issue.state === state)
+  const sortedIssues = filteredIssuesState.sort((a, b) => {
     const timeA = new Date(a.createdAt).getTime()
     const timeB = new Date(b.createdAt).getTime()
-    return order==='asc'?(timeB - timeA):(timeA-timeB)
+    return order === 'asc' ? timeB - timeA : timeA - timeB
   })
 
   const issueTasks = sortedIssues.map((issue, i) => (
@@ -207,8 +230,27 @@ const IssueTasks = () => {
           {state === 'CLOSED' ? 'DONE' : state}
         </Button>
         <StatesDialog selectedValue={state} open={open} onClose={handleClose} />
-        <IconButton sx={{mr:5}} onClick = {heandleOrderBottom}>
-          {order==='asc'?<KeyboardDoubleArrowDownIcon />:<KeyboardDoubleArrowUpIcon/>}
+        <Box sx={{ ml: 'auto', mr: 0.5 }}>
+          <TextField
+            label="Title"
+            variant="standard"
+            value={serchTitle}
+            onChange={handleSerchTitleChange}
+          />
+        </Box>
+        <TextField
+          label="Body"
+          variant="standard"
+          value={serchBody}
+          onChange={handleSerchBodyChange}
+        />
+
+        <IconButton sx={{ mr: 5 }} onClick={heandleOrderBottom}>
+          {order === 'asc' ? (
+            <KeyboardDoubleArrowDownIcon />
+          ) : (
+            <KeyboardDoubleArrowUpIcon />
+          )}
         </IconButton>
       </div>
 
