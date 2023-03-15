@@ -3,11 +3,7 @@ import { Card, CardContent, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import IssueTask from './issuetask'
 
-export interface SimpleDialogProps {
-  open: boolean
-  selectedValue: string
-  onClose: (value: string) => void
-}
+export 
 
 const HomePage = () => {
   return (

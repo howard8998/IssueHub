@@ -18,7 +18,7 @@ interface Issue {
   number: number
   title: string
   url: string
-  state: string
+  labels: { nodes: { name: string }[] }
   createdAt: string
   updatedAt: string
   body: string
@@ -41,7 +41,11 @@ async function getissue(
             number
             title
             url
-            state
+            labels(first: 1) {
+              nodes {
+                name
+              }
+            }
             createdAt
             updatedAt
             body

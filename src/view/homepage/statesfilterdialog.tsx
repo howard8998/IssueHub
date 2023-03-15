@@ -7,13 +7,20 @@ import {
   Icon,
   ListItemText,
 } from '@mui/material'
-import { SimpleDialogProps } from './homepage'
+
+import changeLabel from '../../component/gitapi/changelabel'
 import CircleIcon from '@mui/icons-material/Circle'
-const states: string[] = ['ALL', 'OPEN', 'IN PROGESS', 'CLOSED']
+interface SimpleDialogProps {
+  open: boolean
+  selectedValue: string
+  onClose: (value: string) => void
+}
+const states: string[] = ['ALL', 'OPEN', 'IN PROGESS', 'DONE']
+
 const statesColor: { [key: string]: string } = {
   OPEN: 'green',
   'IN PROGESS': 'red',
-  CLOSED: 'black',
+  DONE: 'black',
   ALL: 'gray',
 }
 const StatesDialog = (props: SimpleDialogProps) => {
@@ -41,7 +48,7 @@ const StatesDialog = (props: SimpleDialogProps) => {
                   <CircleIcon />
                 </Icon>
               </ListItemAvatar>
-              <ListItemText primary={states === 'CLOSED' ? 'DONE' : states} />
+              <ListItemText primary={states} />
             </ListItemButton>
           </ListItem>
         ))}

@@ -3,7 +3,8 @@ import fetchIssue from '../../component/gitapi/fetchissue'
 import { SetStateAction, useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
-import StatesDialog from './statesdialog'
+import StatesFilterDialog from './statesfilterdialog'
+import StatesChangeDialog from './stateschangedialog'
 import TaskMenu from './taskmenu'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp'
@@ -13,7 +14,7 @@ interface Issue {
   number: number
   title: string
   url: string
-  state: string
+  labels: { nodes: { name: string }[] }
   createdAt: string
   updatedAt: string
   body: string
@@ -22,11 +23,12 @@ interface Issue {
     url: string
   }
 }
-const states: string[] = ['ALL', 'OPEN', 'IN PROGESS', 'CLOSED']
+
+const states: string[] = ['ALL', 'OPEN', 'IN PROGESS', 'DONE']
 const statesColor: { [key: string]: string } = {
   OPEN: 'green',
   'IN PROGESS': 'red',
-  CLOSED: 'black',
+  DONE: 'black',
   ALL: 'gray',
 }
 
@@ -49,6 +51,13 @@ const IssueTask = ({
   createdAt: string
   updatedAt: string
 }) => {
+  const [open, setOpen] = useState(false)
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
   return (
     <Card
       sx={{
@@ -63,9 +72,20 @@ const IssueTask = ({
         flexWrap: 'wrap',
       }}
     >
-      <Button sx={{ ml: 1, mt: 1, color: statesColor[state] }}>
-        {state === 'CLOSED' ? 'DONE' : state}
+      <Button
+        sx={{ ml: 1, mt: 1, color: statesColor[state] }}
+        onClick={handleClickOpen}
+      >
+        {state === undefined ? 'NONE' : state }
       </Button>
+      <StatesChangeDialog
+        issuename={issuename}
+        issuenumber={issuenumber}
+        issueowner={issueowner}
+        selectedValue={state}
+        open={open}
+        onClose={handleClose}
+      />
       <TaskMenu
         issuename={issuename}
         issueowner={issueowner}
@@ -79,7 +99,13 @@ const IssueTask = ({
         {title}
       </Typography>
       <Typography
-        sx={{ width: 450, fontSize: 18, m: 2.5, fontFamily: 'inherit' }}
+        sx={{
+          width: 450,
+          fontSize: 18,
+          m: 2.5,
+          fontFamily: 'inherit',
+          height: 'auto',
+        }}
       >
         {body}
       </Typography>
@@ -143,7 +169,7 @@ const IssueTasks = () => {
       if (hasNextPage) {
         const result = await fetchIssue(newEndCursor)
         if (result) {
-          setIssues(i => [...i, ...result.issues.nodes.slice(0, 10)])
+          setIssues([...issues, ...result.issues.nodes.slice(0, 10)])
           setnextEndCursor(result.issues.pageInfo.endCursor)
           sethasNextPage(result.issues.pageInfo.hasNextPage)
         }
@@ -187,7 +213,7 @@ const IssueTasks = () => {
   const filteredIssuesState =
     state === 'ALL'
       ? filteredIssuesTitle
-      : filteredIssuesTitle.filter((issue) => issue.state === state)
+      : filteredIssuesTitle.filter((issue) => issue.labels.nodes[0]?.name=== state)
   const sortedIssues = filteredIssuesState.sort((a, b) => {
     const timeA = new Date(a.createdAt).getTime()
     const timeB = new Date(b.createdAt).getTime()
@@ -199,7 +225,7 @@ const IssueTasks = () => {
       key={i}
       title={issue.title}
       body={issue.body}
-      state={issue.state}
+      state={issue.labels.nodes[0]?.name}
       issuenumber={issue.number}
       issuename={issue.repository.nameWithOwner.split('/')[1]}
       issueowner={issue.repository.nameWithOwner.split('/')[0]}
@@ -228,7 +254,11 @@ const IssueTasks = () => {
         >
           {state === 'CLOSED' ? 'DONE' : state}
         </Button>
-        <StatesDialog selectedValue={state} open={open} onClose={handleClose} />
+        <StatesFilterDialog
+          selectedValue={state}
+          open={open}
+          onClose={handleClose}
+        />
         <Box sx={{ ml: 'auto', mr: 0.5 }}>
           <TextField
             label="Title"
