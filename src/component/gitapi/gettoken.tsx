@@ -2,7 +2,8 @@ import axios from 'axios'
 const clientId: string = process.env.REACT_APP_CLIENTID as string
 const clientSecret: string = process.env.REACT_APP_CLIENTSECRET as string
 const getcode = () => {
-  return window.location.search.split('?code=')
+  let code = window.location.search.split('?code=')
+  return code[1].split('#')[0]
 }
 async function getAccessToken(
   clientId: string,
