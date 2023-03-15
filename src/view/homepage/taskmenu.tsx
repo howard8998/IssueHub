@@ -39,7 +39,7 @@ const TaskMenu = ({
   useEffect(() => {
     setUpdatedBody(body)
     setUpdatedTitle(title)
-  })
+  },[anchorEl])
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedTitle(event.target.value)
   }
