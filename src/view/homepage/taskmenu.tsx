@@ -64,7 +64,7 @@ const TaskMenu = ({
       handleEditdialogClose()
       seterrOpen(false)
       window.location.reload()
-    } catch (err) {
+    } catch (err: any) {
       setSubmitError(err.message)
       seterrOpen(true)
     }
