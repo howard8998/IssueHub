@@ -1,5 +1,6 @@
 import { Button, Card, IconButton } from '@mui/material'
 import fetchIssue from '../../component/gitapi/fetchissue'
+import { TimeFormatter } from '../../component/recoil/TimeFormatter'
 import { SetStateAction, useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
@@ -9,6 +10,7 @@ import TaskMenu from './taskmenu'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp'
 import TextField from '@material-ui/core/TextField/TextField'
+
 import { Box } from '@mui/system'
 interface Issue {
   number: number
@@ -100,22 +102,23 @@ const IssueTask = ({
       </Typography>
       <Typography
         sx={{
-          width: 450,
+          maxWidth:400,
           fontSize: 18,
           m: 2.5,
           fontFamily: 'inherit',
           height: 'auto',
+          wordWrap: 'break-word'
         }}
       >
         {body}
       </Typography>
       <Typography
         sx={{
-          width: 150,
+          width: 200,
           fontSize: 10,
           mt: 3,
           mr: 2.5,
-          mb: 2,
+          mb: 1,
           textAlign: 'end',
           color: 'GrayText',
         }}
@@ -221,8 +224,8 @@ const IssueTasks = () => {
       issuenumber={issue.number}
       issuename={issue.repository.nameWithOwner.split('/')[1]}
       issueowner={issue.repository.nameWithOwner.split('/')[0]}
-      createdAt={issue.createdAt.split('T')[0]}
-      updatedAt={issue.updatedAt.split('T')[0]}
+      createdAt={TimeFormatter(issue.createdAt)}
+      updatedAt={TimeFormatter(issue.updatedAt)}
     />
   ))
   return (
