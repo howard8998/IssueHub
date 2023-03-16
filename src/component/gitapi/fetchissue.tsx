@@ -5,9 +5,16 @@ interface User {
     nodes: Issue[]
     pageInfo: {
       endCursor: string
-      hasNextPage:boolean
+      hasNextPage: boolean
     }
   }
+  repositories: {
+    edges: { node: repo }[]
+  }
+}
+interface repo {
+  nameWithOwner: string
+  hasIssuesEnabled:boolean
 }
 interface GraphQLResponse {
   data: {
@@ -26,7 +33,6 @@ interface Issue {
     nameWithOwner: string
     url: string
   }
-  
 }
 async function getissue(
   accessToken: string,
@@ -59,6 +65,14 @@ async function getissue(
             hasNextPage
           }
         }
+        repositories(first:100) {
+          edges {
+            node {
+              nameWithOwner
+              hasIssuesEnabled
+            }
+          }
+        }
       }
     }
   `
@@ -80,7 +94,7 @@ async function getissue(
         },
       },
     )
-    
+
     return response.data.data.user
   } catch (error) {
     console.error(error)

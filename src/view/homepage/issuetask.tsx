@@ -1,6 +1,6 @@
 import { Button, Card, IconButton } from '@mui/material'
 import fetchIssue from '../../component/gitapi/fetchissue'
-import { TimeFormatter } from '../../component/recoil/TimeFormatter'
+import { TimeFormatter } from '../../utils/TimeFormatter'
 import { SetStateAction, useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
@@ -10,8 +10,10 @@ import TaskMenu from './taskmenu'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp'
 import TextField from '@material-ui/core/TextField/TextField'
+import AddIcon from '@mui/icons-material/Add'
 
 import { Box } from '@mui/system'
+import AddIssue from './addissue'
 interface Issue {
   number: number
   title: string
@@ -24,6 +26,10 @@ interface Issue {
     nameWithOwner: string
     url: string
   }
+}
+interface repo {
+  nameWithOwner:string
+  hasIssuesEnabled:boolean
 }
 
 const states: string[] = ['ALL', 'OPEN', 'IN PROGESS', 'DONE']
@@ -78,7 +84,7 @@ const IssueTask = ({
         sx={{ ml: 1, mt: 1, color: statesColor[state] }}
         onClick={handleClickOpen}
       >
-        {state === undefined ? 'NONE' : state }
+        {state === undefined ? 'NONE' : state}
       </Button>
       <StatesChangeDialog
         issuename={issuename}
@@ -102,12 +108,12 @@ const IssueTask = ({
       </Typography>
       <Typography
         sx={{
-          maxWidth:400,
+          maxWidth: 400,
           fontSize: 18,
           m: 2.5,
           fontFamily: 'inherit',
           height: 'auto',
-          wordWrap: 'break-word'
+          wordWrap: 'break-word',
         }}
       >
         {body}
@@ -128,13 +134,14 @@ const IssueTask = ({
         updated at:{updatedAt}
       </Typography>
     </Card>
-    
   )
 }
 
 const IssueTasks = () => {
   const [issues, setIssues] = useState<Issue[]>([])
+  const [repo, setRepo] = useState([''])
   const [open, setOpen] = useState(false)
+  const [addIssueOpen, setIssueOpen] = useState(false)
   const [state, setstate] = useState(states[0])
   const [newEndCursor, setnewEndCursor] = useState('')
   const [nextEndCursor, setnextEndCursor] = useState('')
@@ -160,6 +167,12 @@ const IssueTasks = () => {
     setOpen(false)
     setstate(value)
   }
+  const handleaddIssueOpen = ()=> {
+    setIssueOpen(true)
+  }
+  const handleaddIssueClose = ()=> {
+    setIssueOpen(false)
+  }
   const heandleOrderBottom = () => {
     if (order === 'asc') {
       setorder('desc')
@@ -173,6 +186,7 @@ const IssueTasks = () => {
       if (hasNextPage) {
         const result = await fetchIssue(newEndCursor)
         if (result) {
+          setRepo(result?.repositories.edges.filter(edge => edge.node.hasIssuesEnabled).map(edge => edge.node.nameWithOwner))
           setIssues([...issues, ...result.issues.nodes.slice(0, 10)])
           setnextEndCursor(result.issues.pageInfo.endCursor)
           sethasNextPage(result.issues.pageInfo.hasNextPage)
@@ -207,14 +221,14 @@ const IssueTasks = () => {
     return null
   }
   const filteredAndSortedIssues = [...issues]
-  .filter((issue) => issue.body.includes(serchBody))
-  .filter((issue) => issue.title.includes(serchTitle))
-  .filter((issue) => state === 'ALL' || issue.labels.nodes[0]?.name === state)
-  .sort((a, b) => {
-    const timeA = new Date(a.createdAt).getTime()
-    const timeB = new Date(b.createdAt).getTime()
-    return order === 'asc' ? timeB - timeA : timeA - timeB
-  })
+    .filter((issue) => issue.body.includes(serchBody))
+    .filter((issue) => issue.title.includes(serchTitle))
+    .filter((issue) => state === 'ALL' || issue.labels.nodes[0]?.name === state)
+    .sort((a, b) => {
+      const timeA = new Date(a.createdAt).getTime()
+      const timeB = new Date(b.createdAt).getTime()
+      return order === 'asc' ? timeB - timeA : timeA - timeB
+    })
   const issueTasks = filteredAndSortedIssues.map((issue, i) => (
     <IssueTask
       key={i}
@@ -242,6 +256,7 @@ const IssueTasks = () => {
             height: 40,
             ml: 4.5,
             mt: 1,
+            mb:-2,
             color: statesColor[state],
             fontSize: 20,
           }}
@@ -269,17 +284,21 @@ const IssueTasks = () => {
           onChange={handleSerchBodyChange}
         />
 
-        <IconButton sx={{ mr: 5 }} onClick={heandleOrderBottom}>
+        <IconButton sx={{ mr: 8, mb: -3 }} onClick={heandleOrderBottom}>
           {order === 'asc' ? (
             <KeyboardDoubleArrowDownIcon />
           ) : (
             <KeyboardDoubleArrowUpIcon />
           )}
         </IconButton>
-      </div>
+        <IconButton color="primary"  sx={{ mr: 5, mb: -3 ,ml:1,}} onClick={handleaddIssueOpen}>
+          <AddIcon  />
+        </IconButton>
 
+      </div>
+      <AddIssue open={addIssueOpen} repo={repo} onclose={handleaddIssueClose}/>
       {issueTasks}
-      
+
       <BottomDetector />
     </div>
   )
