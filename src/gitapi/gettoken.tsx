@@ -10,7 +10,7 @@ async function getAccessToken(
   code: string,
 ): Promise<string | undefined> {
   const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_PROXY||'https://github.com',
+    baseURL: process.env.REACT_APP_API_PROXY||'https://nameless-morning-7203.howardwang8998.workers.dev/?https://github.com',
   })
   try {
     const response = await instance.post(
@@ -27,9 +27,7 @@ async function getAccessToken(
       },
     )
     const accessToken = response.data.access_token
-    console.log(response)
     sessionStorage.setItem('accessToken', accessToken)
-    console.log(accessToken)
     console.log('gettoken success')
     return accessToken
   } catch (error) {
