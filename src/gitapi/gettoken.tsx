@@ -10,7 +10,7 @@ async function getAccessToken(
   code: string,
 ): Promise<string | undefined> {
   const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_PROXY,
+    baseURL: process.env.REACT_APP_API_PROXY||'https://github.com',
   })
   try {
     const response = await instance.post(
