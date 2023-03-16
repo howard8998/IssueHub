@@ -28,6 +28,7 @@ async function getAccessToken(
     )
     const accessToken = response.data.access_token
     sessionStorage.setItem('accessToken', accessToken)
+    console.log(accessToken)
     console.log('gettoken success')
     return accessToken
   } catch (error) {
