@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button'
 import { Card, CardActions, CardContent, Typography } from '@mui/material'
-
+const clientId: string = process.env.REACT_APP_CLIENTID as string
 const login = () => {
   return (
     <Card sx={{mt:8,width:500,mx:'auto',boxShadow:4}}>
@@ -16,7 +16,7 @@ const login = () => {
 }
 function Redirect() {
   window.location.replace(
-    'https://github.com/login/oauth/authorize?client_id=afdb021b4d5a23d7c73d;scope=repo,user',
+    `https://github.com/login/oauth/authorize?client_id=${clientId};scope=repo,user`,
   )
 }
 export default login

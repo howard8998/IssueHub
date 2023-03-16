@@ -40,7 +40,7 @@ REACT_APP_CLIENTSECRET = '你在github oauth app取得的CLIENTSECRET'
 
 ## 程式架構
 
-> public/                 # 網頁靜態資源<br>
+> public/                 # 網頁靜態資源
 > > index.html<br>
 > > favicon.ico<br>
 
@@ -77,4 +77,3 @@ package.json                # npm 包管理器設定文件<br>
 pnpm-lock.yaml              #紀錄當前安装的包的版本信息<br>
 README.md                   # 專案說明文件<br>
 tsconfig.json               # TypeScript編譯器的編譯選項<br>
-
