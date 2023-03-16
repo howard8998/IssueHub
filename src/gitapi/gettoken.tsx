@@ -44,7 +44,6 @@ const gettoken = async () => {
       sessionStorage.getItem('accessToken') === null
     ) {
       if (window.location.search.match('code=?')) {
-        console.log(clientSecret)
         await getAccessToken(clientId, clientSecret, code)
 
       }

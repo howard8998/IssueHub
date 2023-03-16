@@ -2,10 +2,16 @@ import logout from '../gitapi/logout'
 import { Card, CardContent, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import IssueTask from '../component/issuetask'
+import { useEffect } from 'react'
+import gettoken from '../gitapi/gettoken'
 
 export 
 
 const HomePage = () => {
+  useEffect(() => {
+    gettoken()
+  })
+  
   return (
     <div style={{ width: 800, margin: 'auto' }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
