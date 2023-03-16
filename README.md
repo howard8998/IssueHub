@@ -1,4 +1,4 @@
-###### GitHub Issue 管理網站
+# GitHub Issue 管理網站
 串接github api使用戶可以管理，更新
 
 ### `npm start`
