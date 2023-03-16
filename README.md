@@ -1,36 +1,80 @@
 # GitHub Issue 管理網站
-串接github api使用戶可以管理，更新
 
-### `npm start`
+串接github api使用戶可以新增、更新、搜尋task(issue)，並能夠更新task狀態。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 技術架構
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+React
+React Router
+Axios
 
-### `npm test`
+## 開始
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 環境設置
 
-### `npm run build`
+1. 安裝 Node.js 環境
+2. 複製或下載此專案
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `pnpm i`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+使用終端機進入專案目錄後，執行 'pnpm i' 指令來安裝相依套件。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 設定環境變數
 
-### `npm run eject`
+#### 創建自己的github oauth app
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+按照 <https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app>
+的指示創建一個自己的github oauth app
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### 設定環境變數
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. 在根目錄新增檔案 .env
+2. 在裡面新增以下兩個變數
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+REACT_APP_CLIENTID = '你在github oauth app取得的CLIENTID'
+REACT_APP_CLIENTSECRET = '你在github oauth app取得的CLIENTSECRET'
+
+### `pnpm start`
+
+使用該指令來運行程式在本地端: <http://localhost:3000/> 上運行。
+
+## 程式架構
+
+> public/                 # 網頁靜態資源<br>
+> > index.html<br>
+> > favicon.ico<br>
+
+>src/                     # React 主要程式碼目錄<br>
+>>components/             # React 組件<br>
+>>>addissue.tsx #新增issue<br>
+>>>issuetask.tsx #issuetask<br>
+>>>stateschangedialog.tsx #更改issue狀態<br>
+>>>statesfilterdialog.tsx #依照state篩選task<br>
+>>>taskmenu.tsx #編輯task選項<br>
+
+>>views/                  # 網頁頁面<br>
+>>>homepage.tsx #主要頁面<br>
+>>>login.tsx #登入頁面<br>
+
+>>utils/                  # 工具類程式碼<br>
+>>>TimeFormatter.tsx #格式化時間<br>
+
+>>gitapi/                  # github相關api<br>
+>>>changelabel.tsx #更改標籤<br>
+closeissue.tsx #關閉issue<br>
+editissue.tsx #編輯issue<br>
+fetchissue.tsx #取得issue<br>
+gettoken.tsx #取得token<br>
+getuser.tsx #取得username<br>
+logout.tsx #登出<br>
+postissue.tsx #新增issue<br>
+
+>>index.tsx               # 入口文件<br>
+App.tsx                 # React 主要組件<br>
+
+>.gitignore                 # Git 忽略文件列表<br>
+package.json                # npm 包管理器設定文件<br>
+pnpm-lock.yaml              #紀錄當前安装的包的版本信息<br>
+README.md                   # 專案說明文件<br>
+tsconfig.json               # TypeScript編譯器的編譯選項<br>
 
