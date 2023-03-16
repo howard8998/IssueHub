@@ -9,8 +9,10 @@ async function getAccessToken(
   clientSecret: string,
   code: string,
 ): Promise<string | undefined> {
+  //設置自訂proxy伺服器，如無法作用請自行修改
+  const proxyurl = 'https://nameless-morning-7203.howardwang8998.workers.dev/?'
   const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_PROXY||'https://nameless-morning-7203.howardwang8998.workers.dev/?https://github.com',
+    baseURL: process.env.REACT_APP_API_PROXY||`${proxyurl}https://github.com`,
   })
   try {
     const response = await instance.post(
