@@ -13,9 +13,9 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import EditIssue from '../../component/gitapi/editissue'
-import { taskSchema } from '../../formschema/taskSchema'
-import closeissue from '../../component/gitapi/closeissue'
+import EditIssue from '../gitapi/editissue'
+import { taskSchema } from '../formschema/taskSchema'
+import closeissue from '../gitapi/closeissue'
 const TaskMenu = ({
   issuename,
   issueowner,

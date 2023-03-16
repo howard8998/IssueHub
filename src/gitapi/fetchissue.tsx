@@ -1,5 +1,5 @@
 import axios from 'axios'
-import getuser from '../../component/gitapi/getuser'
+import getuser from './getuser'
 interface User {
   issues: {
     nodes: Issue[]

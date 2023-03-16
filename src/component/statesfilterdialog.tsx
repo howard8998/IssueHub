@@ -8,7 +8,6 @@ import {
   ListItemText,
 } from '@mui/material'
 
-import changeLabel from '../../component/gitapi/changelabel'
 import CircleIcon from '@mui/icons-material/Circle'
 interface SimpleDialogProps {
   open: boolean

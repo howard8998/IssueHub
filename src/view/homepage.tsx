@@ -1,7 +1,7 @@
-import logout from '../../component/gitapi/logout'
+import logout from '../gitapi/logout'
 import { Card, CardContent, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
-import IssueTask from './issuetask'
+import IssueTask from '../component/issuetask'
 
 export 
 

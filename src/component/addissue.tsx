@@ -15,8 +15,8 @@ import {
 } from '@mui/material'
 import React from 'react'
 import { useEffect, useState } from 'react'
-import postissue from '../../component/gitapi/postissue'
-import { taskSchema } from '../../formschema/taskSchema'
+import postissue from '../gitapi/postissue'
+import { taskSchema } from '../formschema/taskSchema'
 interface Props {
   open: boolean
   repo: string[]

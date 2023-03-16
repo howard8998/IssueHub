@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from '@mui/material'
 
-import changeLabel from '../../component/gitapi/changelabel'
+import changeLabel from '../gitapi/changelabel'
 import CircleIcon from '@mui/icons-material/Circle'
 import { useState } from 'react'
 const states: string[] = ['OPEN', 'IN PROGESS', 'DONE']

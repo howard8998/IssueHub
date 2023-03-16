@@ -1,6 +1,6 @@
 import { Button, Card, IconButton } from '@mui/material'
-import fetchIssue from '../../component/gitapi/fetchissue'
-import { TimeFormatter } from '../../utils/TimeFormatter'
+import fetchIssue from '../gitapi/fetchissue'
+import { TimeFormatter } from '../utils/TimeFormatter'
 import { SetStateAction, useState } from 'react'
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
