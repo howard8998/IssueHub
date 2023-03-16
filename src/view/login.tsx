@@ -16,7 +16,7 @@ const login = () => {
 }
 function Redirect() {
   window.location.replace(
-    'https://github.com/login/oauth/authorize?client_id=b5612b53764b716cbe01;scope=repo,user',
+    'https://github.com/login/oauth/authorize?client_id=afdb021b4d5a23d7c73d;scope=repo,user',
   )
 }
 export default login
