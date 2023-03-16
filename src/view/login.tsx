@@ -5,7 +5,7 @@ const login = () => {
   return (
     <Card sx={{mt:8,width:500,mx:'auto',boxShadow:4}}>
       <CardContent sx ={{textAlign:'center'}}>
-        <Typography sx ={{fontSize :25,color:'HighlightText'}}>github issue 管理介面</Typography>
+        <Typography sx ={{fontSize :25,color:'black'}}>github issue 管理介面</Typography>
         <Typography sx={{ fontSize: 15,color:'MenuText',mt:3,mx:'auto',mb:-2}}>登入github以開始操作</Typography>
       </CardContent>
       <CardActions sx={{mx:'auto'}}>
