@@ -28,6 +28,7 @@ async function getAccessToken(
     )
     const accessToken = response.data.access_token
     sessionStorage.setItem('accessToken', accessToken)
+    console.log('gettoken success')
     return accessToken
   } catch (error) {
     console.error(error)
@@ -42,9 +43,9 @@ const gettoken = async () => {
       sessionStorage.getItem('accessToken') === null
     ) {
       if (window.location.search.match('code=?')) {
-        console.log(clientId)
+        console.log(clientSecret)
         await getAccessToken(clientId, clientSecret, code)
-        console.log('gettoken success')
+
       }
     }
   } catch {
