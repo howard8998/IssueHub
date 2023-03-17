@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 
 
-const EditIssue = async (
+const PostIssue = async (
   ownerwithrepo: string,
   newTitle: string,
   newBody: string,
@@ -17,6 +17,7 @@ const EditIssue = async (
   const data = {
     title: newTitle,
     body: newBody,
+    labels: ["open"]
   }
   const url = `https://api.github.com/repos/${ownerwithrepo}/issues`
   // Send the PUT request to update the issue
@@ -29,5 +30,6 @@ const EditIssue = async (
       console.error('Error updating issue:', error)
       throw new Error('Failed to post issue')
     })
+  
 }
-export default EditIssue
+export default PostIssue

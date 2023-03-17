@@ -17,6 +17,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import postissue from '../gitapi/postissue'
 import { taskSchema } from '../formschema/taskSchema'
+import stateschangedialog from './stateschangedialog'
 interface Props {
   open: boolean
   repo: string[]
