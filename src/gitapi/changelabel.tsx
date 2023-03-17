@@ -21,6 +21,7 @@ const changeLabel = async (
     .patch(url, data, { headers })
     .then((response) => {
       console.log('Issue Label updated successfully!')
+
     })
     .catch((error) => {
       console.error('Error updating issue:', error)

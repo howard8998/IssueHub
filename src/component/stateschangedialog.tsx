@@ -10,7 +10,7 @@ import {
 
 import changeLabel from '../gitapi/changelabel'
 import CircleIcon from '@mui/icons-material/Circle'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 const states: string[] = ['OPEN', 'IN PROGESS', 'DONE']
 interface SimpleDialogProps {
   issuename: string
@@ -34,14 +34,15 @@ const StatesDialog = (props: SimpleDialogProps) => {
     issuenumber,
     issueowner,
   } = props
+  
+  
   const [selectedState, setSelectedState] = useState(selectedValue)
   const handleListItemClick = async (value: string) => {
+    await changeLabel(issueowner, issuename, issuenumber, value)
     setSelectedState(value)
     onClose(value)
-    await changeLabel(issueowner, issuename, issuenumber, value)
-    window.location.reload()
+   // window.location.reload()
   }
-
   return (
     <Dialog onClose={() => onClose(selectedState)} open={open}>
       <List sx={{ pt: 0 }}>
