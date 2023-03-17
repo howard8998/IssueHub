@@ -62,12 +62,12 @@ const AddIssue = ({ open, onclose, repo }: Props) => {
       await postissue(issuenamewithowner, newTitle, newBody)
       handleEditdialogClose()
       seterrOpen(false)
-      
+      window.location.reload()
     } catch (err:any) {
       setSubmitError(err.message)
       seterrOpen(true)
     }
-    window.location.reload()
+    
   }
   const RepoMenu = (props: SimpleDialogProps) => {
     const { onClose, selectedValue, open } = props
