@@ -2,6 +2,13 @@
 
 串接github api使用戶可以新增、更新、搜尋task(issue)，並能夠更新task狀態。
 
+## 已部署網站
+
+該程式已部署在render平台上，並在cloudflare放置轉發伺服器以解決請求accesstoken時遭遇的問題。
+<br>以下是網址：<br>
+https://frontend-homework.onrender.com/index.html#/login<br>
+若網站出現問題，請聯繫我。
+
 ## 技術架構
 
 React
