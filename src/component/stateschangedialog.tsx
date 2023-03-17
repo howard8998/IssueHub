@@ -38,7 +38,7 @@ const StatesDialog = (props: SimpleDialogProps) => {
   const handleListItemClick = async (value: string) => {
     setSelectedState(value)
     onClose(value)
-    changeLabel(issueowner, issuename, issuenumber, value)
+    await changeLabel(issueowner, issuename, issuenumber, value)
     window.location.reload()
   }
 
