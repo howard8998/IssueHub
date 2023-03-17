@@ -50,6 +50,8 @@ const AddIssue = ({ open, onclose, repo }: Props) => {
     onclose()
   }
   const handlerepomenuOpen = () => {
+    setnewBody('')
+    setnewTitle('')
     setrepoOpen(true)
   }
   const handlerepomenuClose = (value: string) => {
@@ -61,13 +63,13 @@ const AddIssue = ({ open, onclose, repo }: Props) => {
       taskSchema.validateSync({ title: newTitle, body: newBody })
       await postissue(issuenamewithowner, newTitle, newBody)
       handleEditdialogClose()
-      seterrOpen(false)
       window.location.reload()
+      seterrOpen(false)
     } catch (err:any) {
       setSubmitError(err.message)
       seterrOpen(true)
     }
-    
+    console.log(submitError)
   }
   const RepoMenu = (props: SimpleDialogProps) => {
     const { onClose, selectedValue, open } = props
@@ -100,7 +102,7 @@ const AddIssue = ({ open, onclose, repo }: Props) => {
   useEffect(() => {
     setnewBody('')
     setnewTitle('')
-  },[open])
+  }, [open])
   return (
     <Dialog open={open} onClose={handleEditdialogClose}>
       <DialogTitle>Post new issue</DialogTitle>
