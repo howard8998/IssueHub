@@ -40,9 +40,7 @@ const StatesDialog = (props: SimpleDialogProps) => {
     await changeLabel(issueowner, issuename, issuenumber, value)
     setSelectedState(value)
     onClose(value)
-    setTimeout(() => {
-      window.location.reload()
-    }, 500)
+    window.location.reload()
   }
   return (
     <Dialog onClose={() => onClose(selectedState)} open={open}>

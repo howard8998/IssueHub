@@ -1,7 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
-
-
 const EditIssue = async (
   owner: string,
   repo: string,
@@ -22,7 +20,7 @@ const EditIssue = async (
   }
   const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`
   // Send the PUT request to update the issue
-  axios
+  await axios
     .patch(url, data, { headers })
     .then((response) => {
       console.log('Issue updated successfully!')

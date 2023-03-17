@@ -17,7 +17,7 @@ const changeLabel = async (
   }
   const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`
   // Send the PUT request to update the issue
-  axios
+  await axios
     .patch(url, data, { headers })
     .then((response) => {
       console.log('Issue Label updated successfully!')

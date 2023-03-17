@@ -39,7 +39,7 @@ const TaskMenu = ({
   useEffect(() => {
     setUpdatedBody(body)
     setUpdatedTitle(title)
-  },[anchorEl])
+  }, [anchorEl])
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedTitle(event.target.value)
   }
@@ -64,7 +64,7 @@ const TaskMenu = ({
       handleEditdialogClose()
       seterrOpen(false)
       window.location.reload()
-    } catch (err: any) {
+    } catch (err:any) {
       setSubmitError(err.message)
       seterrOpen(true)
     }
@@ -78,9 +78,7 @@ const TaskMenu = ({
       updatedBody,
     )
     handleEditdialogClose()
-    setTimeout(() => {
-      window.location.reload()
-    }, 500)
+    window.location.reload()
   }
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)

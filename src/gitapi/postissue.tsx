@@ -21,7 +21,7 @@ const PostIssue = async (
   }
   const url = `https://api.github.com/repos/${ownerwithrepo}/issues`
   // Send the PUT request to update the issue
-  axios
+  await axios
     .post(url, data, { headers })
     .then((response) => {
       console.log('Post issue successfully!')
