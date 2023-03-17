@@ -64,7 +64,9 @@ const AddIssue = ({ open, onclose, repo }: Props) => {
       taskSchema.validateSync({ title: newTitle, body: newBody })
       await postissue(issuenamewithowner, newTitle, newBody)
       handleEditdialogClose()
-      window.location.reload()
+      setTimeout(() => {
+        window.location.reload()
+      }, 500)
       seterrOpen(false)
     } catch (err:any) {
       setSubmitError(err.message)

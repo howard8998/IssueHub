@@ -78,7 +78,9 @@ const TaskMenu = ({
       updatedBody,
     )
     handleEditdialogClose()
-    window.location.reload()
+    setTimeout(() => {
+      window.location.reload()
+    }, 500)
   }
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
